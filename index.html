@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>LARP STAFF HANDBOOK</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0d1117;
+      color: white;
+    }
+
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      background-color: #161b22;
+      position: fixed;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      color: #58a6ff;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #c9d1d9;
+      text-decoration: none;
+      margin: 12px 0;
+      cursor: pointer;
+    }
+
+    .sidebar a:hover {
+      color: white;
+    }
+
+    .content {
+      margin-left: 240px;
+      padding: 30px;
+      max-width: 900px;
+    }
+
+    .tab-section {
+      display: none;
+    }
+
+    .active-section {
+      display: block;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #c9d1d9;
+      transition: 0.2s;
+    }
+
+    .tab.active {
+      background-color: #21262d;
+      border-color: #58a6ff;
+      color: #58a6ff;
+    }
+
+    .punishments-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .punishments-list li {
+      background-color: #161b22;
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #30363d;
+    }
+
+    .rules-section ul {
+      padding-left: 20px;
+    }
+
+    .rules-section li {
+      margin-bottom: 10px;
+    }
+
+    .punishment-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .punishment-sub {
+      margin-left: 20px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>LARP</h2>
+  <a onclick="openSection('dashboard')">Dashboard</a>
+  <a onclick="openSection('ingame')">In-Game Punishments</a>
+  <a onclick="openSection('discord')">Discord Punishments</a>
+  <a onclick="openSection('rules')">Rules</a>
+</div>
+
+<div class="content">
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="tab-section active-section">
+    <h1>LARP STAFF HANDBOOK</h1>
+    <p>Welcome to the official LARP Staff Handbook. Use the sidebar to navigate between sections.</p>
+  </div>
+
+  <!-- In-Game Punishments -->
+  <div id="ingame" class="tab-section">
+    <h1>In-Game Punishments</h1>
+    <div class="tabs">
+      <div class="tab active" data-tab="minor-ingame">Minor</div>
+      <div class="tab" data-tab="major-ingame">Major</div>
+      <div class="tab" data-tab="severe-ingame">Severe</div>
+    </div>
+    <ul class="punishments-list" id="ingameList"></ul>
+  </div>
+
+  <!-- Discord Punishments -->
+  <div id="discord" class="tab-section">
+    <h1>Discord Punishments</h1>
+    <div class="tabs">
+      <div class="tab active" data-tab="minor-discord">Minor</div>
+      <div class="tab" data-tab="major-discord">Major</div>
+      <div class="tab" data-tab="severe-discord">Severe</div>
+    </div>
+    <ul class="punishments-list" id="discordList"></ul>
+  </div>
+
+  <!-- Rules -->
+  <div id="rules" class="tab-section rules-section">
+    <h1>Rules</h1>
+    <ul>
+      <li><strong>Discord Rules</strong> (Roleplay & Server Conduct)
+        <ul>
+          <li>1. Only roleplay in designated channels.</li>
+          <li>2. Stay in-character; no breaking immersion unnecessarily.</li>
+          <li>3. No powergaming or metagaming. <br>
+            Powergaming: Forcing actions without consent. <br>
+            Metagaming: Using OOC info IC.
+          </li>
+          <li>4. Respect staff hierarchy.</li>
+          <li>5. No spamming, NSFW content, or excessive pings.</li>
+          <li>6. Follow voice chat guidelines and push-to-talk if recommended.</li>
+          <li>7. Follow staff instructions, appeal privately.</li>
+          <li>8. Do not share personal info, doxx, or threaten others.</li>
+          <li>9. Participate in events properly, no disruption.</li>
+          <li>10. No cheating, exploiting, or glitches.</li>
+          <li>11. Rule violations may result in warnings, mutes, kicks, or bans.</li>
+          <li>12. Questions? Ask staff in #questions channel.</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+  function openSection(id) {
+    document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active-section'));
+    document.getElementById(id).classList.add('active-section');
+
+    if (id === 'ingame') showPunishments('minor-ingame');
+    if (id === 'discord') showPunishments('minor-discord');
+  }
+
+  const punishments = {
+    // In-game Roleplay Rules
+    "minor-ingame": [
+      "⚔️ RDM – 1st offense: ⚠️ Warning – Staff explanation, IC apology required",
+      "🚗 VDM – 1st offense: ⚠️ Warning – Staff explanation + IC apology",
+      "📉 FRP Minor: ⚠️ Warning + IC guidance",
+      "🕵️ MG 1st offense: ⚠️ Warning – Remove unfair advantage",
+      "💪 PG 1st offense: ⚠️ Warning + IC apology",
+      "💰 GTAD Minor: ⚠️ Warning + IC fine or arrest",
+      "🔫 CPT Minor: ⚠️ Warning + IC apology / training",
+      "🚑/🚓 Emergency Services Minor: ⚠️ Warning"
+    ],
+    "major-ingame": [
+      "⚔️ RDM – 2nd offense: 🛑 Kick – Removed from server for review",
+      "🚗 VDM – 2nd offense: 🛑 Kick – Temporary removal",
+      "📉 FRP Moderate: 12–24 hour RP mute",
+      "🕵️ MG 2nd offense: 1–12 hour RP mute",
+      "💪 PG 2nd offense: 12–24 hour RP mute",
+      "💰 GTAD Moderate: Temporary RP ban (1–2 days)",
+      "🔫 CPT Moderate: RP mute or 1-day RP suspension",
+      "🚑/🚓 Emergency Services Moderate: Temporary RP suspension (1–12 hours)"
+    ],
+    "severe-ingame": [
+      "⚔️ RDM – 3rd offense / severe: ⛔ 7-day ban or longer",
+      "🚗 VDM – 3rd offense / severe: ⛔ 7-day or permanent ban",
+      "📉 FRP Severe / repeated: 1–3 day RP ban",
+      "🕵️ MG 3rd offense / severe: 1–3 day RP ban",
+      "💪 PG 3rd offense / repeated: 1–3 day RP ban",
+      "💰 GTAD Severe / repeated: 3–7 day RP ban",
+      "🔫 CPT Severe / repeated: 3-day RP ban + IC penalties",
+      "🚑/🚓 Emergency Services Severe / repeated: 1–3 day RP ban"
+    ],
+
+    // Discord
+    "minor-discord": [
+      "Spamming - Warning",
+      "Off-topic messages - Warning",
+      "Mild language - Warning"
+    ],
+    "major-discord": [
+      "Harassment - Kick",
+      "Rule violation - Temp mute (2 weeks)",
+      "Spoilers - Temp ban (2 weeks)"
+    ],
+    "severe-discord": [
+      "Threats or harassment - Permanent ban",
+      "Hate speech - Permanent ban",
+      "Sharing personal info - Permanent ban"
+    ]
+  };
+
+  const tabs = document.querySelectorAll('.tab');
+
+  function showPunishments(category) {
+    const listId = category.includes('ingame') ? 'ingameList' : 'discordList';
+    const list = document.getElementById(listId);
+    list.innerHTML = '';
+    punishments[category].forEach(p => {
+      const li = document.createElement('li');
+      li.textContent = p;
+      list.appendChild(li);
+    });
+
+    tabs.forEach(t => {
+      t.classList.toggle('active', t.dataset.tab === category);
+    });
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => showPunishments(tab.dataset.tab));
+  });
+
+  // Initialize first visible tab
+  showPunishments('minor-ingame');
+</script>
+
+</body>
+</html>

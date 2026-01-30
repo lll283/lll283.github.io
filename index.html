@@ -30,7 +30,7 @@ body {
 .sidebar a:hover { color: white; }
 
 .content { margin-left: 240px; padding: 30px; max-width: 1000px; }
-h1, h2 { color: #58a6ff; }
+h1,h2 { color: #58a6ff; }
 
 /* Hero Banner */
 .dashboard-banner {
@@ -105,6 +105,10 @@ h1, h2 { color: #58a6ff; }
 .quick-link { background-color: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 15px 20px; color: #c9d1d9; text-decoration: none; transition: 0.3s; flex: 1 1 150px; text-align: center; }
 .quick-link:hover { background-color: #21262d; border-color: #58a6ff; color: #58a6ff; }
 
+/* Tabs */
+.tab-section { display: none; }
+.tab-section.active { display: block; }
+
 </style>
 </head>
 <body>
@@ -118,8 +122,9 @@ h1, h2 { color: #58a6ff; }
 </div>
 
 <div class="content">
-<div id="dashboard" class="tab-section active-section">
 
+<!-- Dashboard -->
+<div id="dashboard" class="tab-section active">
   <!-- Hero Banner -->
   <div class="dashboard-banner">
     <img src="https://i.postimg.cc/7LjDKQRP/2D67F56A-93DD-461D-A900-40FC8FF70930.png">
@@ -157,7 +162,7 @@ h1, h2 { color: #58a6ff; }
     <img src="https://i.postimg.cc/7LjDKQRP/2D67F56A-93DD-461D-A900-40FC8FF70930.png" class="announcement-img">
     <div class="announcement-text">
       <h3>City RP Event</h3>
-      <p class="extra" style="display:none;">Full details: The city-wide heist RP event starts at 8 PM server time. Make sure your IC characters are prepared and vehicles are prepped.</p>
+      <p class="extra" style="display:none;">Full details: The city-wide heist RP event starts at 8 PM server time.</p>
     </div>
   </div>
 
@@ -165,7 +170,7 @@ h1, h2 { color: #58a6ff; }
     <img src="https://i.postimg.cc/7LjDKQRP/2D67F56A-93DD-461D-A900-40FC8FF70930.png" class="announcement-img">
     <div class="announcement-text">
       <h3>Server Update</h3>
-      <p class="extra" style="display:none;">Patch notes: Added new EMS vehicles, new police RP jobs, bug fixes, and performance improvements. Check Discord for details.</p>
+      <p class="extra" style="display:none;">Patch notes: Added new EMS vehicles, police RP jobs, bug fixes, and performance improvements.</p>
     </div>
   </div>
 
@@ -211,40 +216,69 @@ h1, h2 { color: #58a6ff; }
   <!-- Quick Links -->
   <h2>Quick Links</h2>
   <div class="quick-links">
-    <a href="#" class="quick-link">In-Game Punishments</a>
-    <a href="#" class="quick-link">Discord Punishments</a>
-    <a href="#" class="quick-link">Rules</a>
+    <a onclick="openSection('ingame')" class="quick-link">In-Game Punishments</a>
+    <a onclick="openSection('discord')" class="quick-link">Discord Punishments</a>
+    <a onclick="openSection('rules')" class="quick-link">Rules</a>
     <a href="#" class="quick-link">Staff Chat</a>
     <a href="#" class="quick-link">Reports / Appeals</a>
   </div>
 
 </div>
+
+<!-- In-Game Punishments -->
+<div id="ingame" class="tab-section">
+  <h2>In-Game Punishments</h2>
+  <p>Add your RDM, VDM, FRP, MG, PG, GTAD, CPT rules and punishments here.</p>
+</div>
+
+<!-- Discord Punishments -->
+<div id="discord" class="tab-section">
+  <h2>Discord Punishments</h2>
+  <p>Add your Discord rules & punishments here.</p>
+</div>
+
+<!-- Rules -->
+<div id="rules" class="tab-section">
+  <h2>Rules</h2>
+  <p>Add full server rules here.</p>
+</div>
+
 </div>
 
 <script>
-// Accordion functionality
+// Tabs
+function openSection(id) {
+  const tabs = document.querySelectorAll('.tab-section');
+  tabs.forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// Accordion
 const acc = document.getElementsByClassName("accordion");
 for (let i = 0; i < acc.length; i++) {
   acc[i].addEventListener("click", function() {
     this.classList.toggle("active");
     const panel = this.nextElementSibling;
-    panel.style.display = panel.style.display === "block" ? "none" : "block";
+    panel.style.display = (panel.style.display === "block") ? "none" : "block";
   });
 }
 
 // Toggle announcement extra text
 function toggleAnnouncement(card) {
   const p = card.querySelector(".extra");
-  if (p.style.display === "none") { p.style.display = "block"; }
-  else { p.style.display = "none"; }
+  p.style.display = (p.style.display === "none") ? "block" : "none";
 }
 
-// Show livery alert (replace with image popup if desired)
+// Show livery alert
 function showLivery(name) {
   alert("Staff Livery Car: " + name);
 }
+
+// Initialize default tab
+document.addEventListener('DOMContentLoaded', () => {
+  openSection('dashboard');
+});
 </script>
 
 </body>
 </html>
-
